@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { IoArrowForwardOutline } from 'react-icons/io5'
+import { Separator } from './ui/separator'
 
 interface footerProps {
 
@@ -12,7 +13,7 @@ const Footer: FC<footerProps> = ({ }) => {
         <p className="text-2xl">
           {`Refer a friend, Get $7`}
         </p>
-
+        <Separator className="bg-dark bg-opacity-40" />
         <div>
           <p className="text-lg">
             {`Subscribe and stay in the know`}
@@ -26,7 +27,7 @@ const Footer: FC<footerProps> = ({ }) => {
             celestial flavors.
             `}
           </p>
-          <div className="w-full flex justify-between border-b-[1px] text-left border-black text-tertiary text-opacity-30 font-extralight">
+          <div className="w-full flex justify-between my-4 border-b-[1px] text-left border-black text-tertiary text-opacity-50 font-extralight">
             <p>
               enter your email address
             </p>
