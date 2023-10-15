@@ -25,6 +25,7 @@ module.exports = {
       backgroundColor: {
         primary: '#F0EBE7',
         dark: '#27282C',
+        accent: '#83BCA9'
       },
       colors: {
         'dark': '#27282C',
