@@ -1,9 +1,22 @@
 import NavBar from '@/components/navBar'
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Catamaran, Cormorant_Garamond } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const catamaran = Catamaran({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-catamaran'
+})
+
+const cormorant_garamond = Cormorant_Garamond({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-cormorant-garamond'
+})
+
+
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-primary text-primary`}>
+      <body className={`${catamaran.variable} ${cormorant_garamond.variable} font-sans bg-primary text-primary`}>
         <NavBar />
         {children}
       </body>

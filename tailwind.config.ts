@@ -22,6 +22,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-catamaran)'],
+        serif: ['var(--font-cormorant-garamond)']
+      },
       backgroundColor: {
         primary: '#F0EBE7',
         dark: '#27282C',

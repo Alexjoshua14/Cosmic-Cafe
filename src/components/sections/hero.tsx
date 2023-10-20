@@ -32,7 +32,6 @@ const Hero: FC<heroProps> = ({ }) => {
       </div>
       <div className='row-start-2 col-span-2 bg-accent relative'>
         <div className="absolute right-0 top-[0] shadow-2xl w-2/3 h-[4px]" hidden /> {/** Add shadow above using this, make sure to unhide */}
-
       </div>
     </section>
   )
