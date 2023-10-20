@@ -7,7 +7,7 @@ interface productShowcaseProps {
 
 const ProductShowcase: FC<productShowcaseProps> = ({ }) => {
   return (
-    <section className="h-[80vh] w-full bg-primary">
+    <section className="z-10 h-[80vh] w-full bg-primary">
       <div className="h-full w-full  grid grid-cols-3 py-24 px-10">
         <div className="h-full flex flex-col items-center px-8 border-r-[1px] border-black border-opacity-30">
           <h3>

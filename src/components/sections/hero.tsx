@@ -25,13 +25,9 @@ const Hero: FC<heroProps> = ({ }) => {
           Lets start your order
         </p>
       </div>
-      <div className="z-[-2] absolute right-0 w-2/3 h-[150%]">
-        <div className="sticky top-0 right-0 w-full h-1/2 flex items-center justify-around">
-          <IoIosArrowBack size={60} />
-          <div className="w-full h-full grid place-items-center relative">
-            <DrinkShowcase />
-          </div>
-          <IoIosArrowForward size={60} />
+      <div className="absolute right-0 w-2/3 h-[135%]">
+        <div className="sticky top-0 right-0 w-full h-1/2">
+          <DrinkShowcase />
         </div>
       </div>
       <div className='row-start-2 col-span-2 bg-accent relative'>
