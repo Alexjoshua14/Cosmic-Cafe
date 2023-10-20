@@ -33,7 +33,7 @@ const recipes = [
 
 const Recipes: FC<recipesProps> = ({ }) => {
   return (
-    <section className="h-screen w-full flex flex-col items-center justify-center">
+    <section className="h-screen w-full flex flex-col items-center justify-center overflow-x-clip">
       <h2 className="text-4xl font-serif pb-24">
         Recipes
       </h2>
