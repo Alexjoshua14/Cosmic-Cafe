@@ -1,10 +1,12 @@
 'use client'
 
-import { FC, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { MdOutlineCoffee } from 'react-icons/md'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { cn } from '@/lib/utils'
+import next from 'next'
+import useAutoIndexManager from '@/lib/hooks/useAutoIndexManager'
 
 
 interface drinkShowcaseProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,31 +34,21 @@ const drinks = [
   },
 ]
 
+const DRINK_DURATION = 5_000 // ms
+
 const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
   // Should perhaps use a reducer?
-  const [selectedDrink, selectDrink] = useState(0)
-  const numOfDrinks = 3
-
-  const nextDrink = () => {
-    selectDrink(prev => {
-      return ((prev + 1) % numOfDrinks)
-    })
-  }
-
-  const previousDrink = () => {
-    selectDrink(prev => {
-      const selected = prev - 1
-      return selected >= 0 ? selected : numOfDrinks - 1
-    })
-  }
+  const [selectedDrink, next, previous, pause, resume] = useAutoIndexManager(DRINK_DURATION, drinks.length)
 
   return (
     <div className={cn(`h-full flex items-center justify-between`, className)}>
-      <button onClick={previousDrink}>
+      <button onClick={previous}>
         <IoIosArrowBack size={60} />
       </button>
 
-      <div className="h-2/3 w-full flex flex-col items-center justify-between overflow-hidden">
+      <div className="h-2/3 w-full flex flex-col items-center justify-between overflow-hidden"
+        onMouseEnter={pause} onTouchStart={pause} onMouseLeave={resume} onTouchEnd={resume}
+      >
         <div className="flex-1">
           {drinks.map((drink) => (
             <div key={drink.id}
@@ -72,8 +64,7 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
           {`${drinks[selectedDrink].name}!`}
         </p>
       </div>
-
-      <button onClick={nextDrink}>
+      <button onClick={next}>
         <IoIosArrowForward size={60} />
       </button>
     </div>
