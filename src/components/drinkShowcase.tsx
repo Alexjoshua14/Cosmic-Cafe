@@ -40,6 +40,7 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
   // Should perhaps use a reducer?
   const { selectedIndex, next, previous, pause, resume, progress } = useAutoIndexManager(DRINK_DURATION, drinks.length)
 
+
   return (
     <div className={cn(`h-full flex items-center justify-between`, className)}>
       <button onClick={previous}>

@@ -1,6 +1,7 @@
-import { clearPreviewData } from 'next/dist/server/api-utils'
 import { setPriority } from 'os'
 import { MutableRefObject, Ref, useCallback, useEffect, useRef, useState } from 'react'
+import { useProgress } from './useProgress'
+import { resolvePtr } from 'dns'
 
 /**
  * TESTS TO CREATE
@@ -24,8 +25,6 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
   const [selectedIndex, changeIndex] = useState(0)
   const timerId = useRef<NodeJS.Timeout | null>(null)
   const timerStartTime = useRef<number | null>(null)
-  const [progress, setProgress] = useState(0)
-  const progressIntervalId = useRef<NodeJS.Timeout | null>(null)
 
   const timeElapsedAtPause = useRef(0)
 
@@ -38,39 +37,34 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
       msElapsed = timerStartTime.current ? Date.now() - timerStartTime.current : 0
     }
 
-
     return msElapsed / intervalDuration
   }, [intervalDuration, timeElapsedAtPause])
 
-  const updateProgress = useCallback(() => {
-    setProgress(getProgress())
-  }, [setProgress, getProgress])
-
-  const setProgressTimer = useCallback(() => {
-    if (progressIntervalId.current)
-      clearInterval(progressIntervalId.current)
-    progressIntervalId.current = setInterval(updateProgress, 15)
-  }, [progressIntervalId, updateProgress])
+  const { progress, stopProgress, startProgress, resetProgress } = useProgress(getProgress)
 
   const next = useCallback(() => {
+    stopProgress()
+    resetProgress()
     if (timerId.current) {
       clearTimeout(timerId.current)
       timerId.current = null
     }
-    setProgress(0)
 
     changeIndex(prev => {
       return ((prev + 1) % numOfItems)
     })
 
+
     timerStartTime.current = Date.now()
     timerId.current = setTimeout(() => {
       next()
     }, intervalDuration)
-    setProgressTimer()
-  }, [intervalDuration, numOfItems, setProgressTimer])
+    startProgress()
+  }, [intervalDuration, numOfItems, stopProgress, startProgress, resetProgress])
 
   const previous = useCallback(() => {
+    stopProgress()
+    resetProgress()
     if (timerId.current) {
       clearTimeout(timerId.current)
       timerId.current = null
@@ -85,18 +79,18 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
     timerId.current = setTimeout(() => {
       next()
     }, intervalDuration)
-  }, [intervalDuration, numOfItems, next])
+    startProgress()
+  }, [intervalDuration, numOfItems, next, stopProgress, startProgress, resetProgress])
 
 
   const pause = useCallback(() => {
+    stopProgress()
     if (timerId.current) {
       clearTimeout(timerId.current)
       timerId.current = null
     }
     timeElapsedAtPause.current = getProgress() * intervalDuration
-    updateProgress()
-    // console.log(timeElapsedAtPause)
-  }, [timeElapsedAtPause, intervalDuration, getProgress, updateProgress])
+  }, [timeElapsedAtPause, intervalDuration, getProgress, stopProgress])
 
   const resume = useCallback(() => {
     if (!timerId.current) {
@@ -105,22 +99,24 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
       }, intervalDuration - timeElapsedAtPause.current)
       timerStartTime.current = Date.now() - timeElapsedAtPause.current
       timeElapsedAtPause.current = 0
+      startProgress()
     }
-  }, [timeElapsedAtPause, intervalDuration, next])
+  }, [timeElapsedAtPause, intervalDuration, next, startProgress])
 
   useEffect(() => {
     timerStartTime.current = Date.now()
     timerId.current = setTimeout(() => {
       next()
     }, intervalDuration)
+    startProgress()
 
     return () => {
-      if (timerId.current)
+      if (timerId.current) {
         clearTimeout(timerId.current)
-      if (progressIntervalId.current)
-        clearTimeout(progressIntervalId.current)
+        timerId.current = null
+      }
     }
-  }, [next, intervalDuration])
+  }, [next, intervalDuration, startProgress])
 
   return { selectedIndex, next, previous, pause, resume, startTime: timerStartTime.current, getProgress, progress }
 }
