@@ -38,8 +38,39 @@ const DRINK_DURATION = 10_000 // ms
 
 const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
   // Should perhaps use a reducer?
-  const { selectedIndex, next, previous, pause, resume, progress } = useAutoIndexManager(DRINK_DURATION, drinks.length)
+  const { selectedIndex, next, previous, pause, resume, status, progress } = useAutoIndexManager(DRINK_DURATION, drinks.length)
+  const [isIntersecting, setIsIntersecting] = useState(true)
+  const drinkCarouselRef = useRef<HTMLDivElement | null>(null)
 
+  const intersectionObserver = new IntersectionObserver((entries) => {
+
+    const isCurrentlyIntersecting = entries[0].isIntersecting
+
+    if (isIntersecting != isCurrentlyIntersecting) {
+      setIsIntersecting(isCurrentlyIntersecting)
+      if (isCurrentlyIntersecting) {
+        if (status == "paused") {
+          resume()
+        }
+      } else {
+        if (status == "playing") {
+          pause()
+        }
+      }
+    }
+  })
+
+  useEffect(() => {
+    if (drinkCarouselRef.current)
+      intersectionObserver.observe(drinkCarouselRef.current)
+
+    const drinkCarouselRefCopy = drinkCarouselRef.current
+
+    return () => {
+      if (drinkCarouselRefCopy)
+        intersectionObserver.observe(drinkCarouselRefCopy)
+    }
+  })
 
   return (
     <div className={cn(`h-full flex items-center justify-between`, className)}>
@@ -47,7 +78,7 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
         <IoIosArrowBack size={60} />
       </button>
 
-      <div className="h-2/3 w-full flex flex-col items-center justify-between overflow-hidden"
+      <div ref={drinkCarouselRef} className="h-2/3 w-full flex flex-col items-center justify-between overflow-hidden"
         onMouseEnter={pause} onTouchStart={pause} onMouseLeave={resume} onTouchEnd={resume}
       >
         <div className="flex-1">

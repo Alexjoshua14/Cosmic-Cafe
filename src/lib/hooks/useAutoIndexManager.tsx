@@ -21,10 +21,11 @@ import { resolvePtr } from 'dns'
  * @returns 
  */
 function useAutoIndexManager(intervalDuration: number, numOfItems: number):
-  ({ selectedIndex: number, next: () => void, previous: () => void, pause: () => void, resume: () => void, startTime: number | null, getProgress: () => number, progress: number }) {
+  ({ selectedIndex: number, next: () => void, previous: () => void, pause: () => void, resume: () => void, startTime: number | null, getProgress: () => number, progress: number, status: "paused" | "playing" | null }) {
   const [selectedIndex, changeIndex] = useState(0)
   const timerId = useRef<NodeJS.Timeout | null>(null)
   const timerStartTime = useRef<number | null>(null)
+  const [status, setStatus] = useState<"paused" | "playing" | null>("paused")
 
   const timeElapsedAtPause = useRef(0)
 
@@ -85,6 +86,7 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
 
   const pause = useCallback(() => {
     stopProgress()
+    setStatus("paused")
     if (timerId.current) {
       clearTimeout(timerId.current)
       timerId.current = null
@@ -93,6 +95,7 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
   }, [timeElapsedAtPause, intervalDuration, getProgress, stopProgress])
 
   const resume = useCallback(() => {
+    setStatus("playing")
     if (!timerId.current) {
       timerId.current = setTimeout(() => {
         next()
@@ -118,7 +121,7 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
     }
   }, [next, intervalDuration, startProgress])
 
-  return { selectedIndex, next, previous, pause, resume, startTime: timerStartTime.current, getProgress, progress }
+  return { selectedIndex, next, previous, pause, resume, startTime: timerStartTime.current, getProgress, progress, status }
 }
 
 export default useAutoIndexManager
