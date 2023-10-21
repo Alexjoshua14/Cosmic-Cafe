@@ -11,7 +11,7 @@ export function useProgress(getProgress: () => number): {
   const startProgress = useCallback(() => {
     if (!progressIntervalId.current) {
       progressIntervalId.current = setInterval(() => {
-        setProgress(() => +getProgress().toFixed(2))
+        setProgress(() => getProgress())
       }, 20)
     }
     

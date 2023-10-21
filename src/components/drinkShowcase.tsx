@@ -61,8 +61,8 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-center w-full h-[20px]">
-          <Progress value={progress * 100} />
+        <div className="flex items-center justify-center w-1/5 h-[20px]">
+          <Progress value={+progress.toFixed(3) * 100} />
         </div>
         <p className="font-light text-4xl">
           {`${drinks[selectedIndex].name}!`}
