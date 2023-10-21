@@ -6,7 +6,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { cn } from '@/lib/utils'
 import useAutoIndexManager from '@/lib/hooks/useAutoIndexManager'
 import { motion, useAnimationFrame } from 'framer-motion'
-import { Progress } from '@radix-ui/react-progress'
+import { Progress } from '@/components/ui/progress'
 
 
 interface drinkShowcaseProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -34,27 +34,11 @@ const drinks = [
   },
 ]
 
-const DRINK_DURATION = 5_000 // ms
+const DRINK_DURATION = 10_000 // ms
 
 const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
   // Should perhaps use a reducer?
-  const { selectedIndex, next, previous, pause, resume, getProgress } = useAutoIndexManager(DRINK_DURATION, drinks.length)
-
-  const [progress, setProgress] = useState(.75)
-  const timerId = useRef<NodeJS.Timeout | null>(null)
-
-  useEffect(() => {
-    timerId.current = setInterval(() => {
-      let currentProgress = getProgress()
-      // setProgress(currentProgress)
-      console.log(currentProgress)
-    }, 1000)
-
-    return () => {
-      if (timerId.current)
-        clearTimeout(timerId.current)
-    }
-  })
+  const { selectedIndex, next, previous, pause, resume, progress } = useAutoIndexManager(DRINK_DURATION, drinks.length)
 
   return (
     <div className={cn(`h-full flex items-center justify-between`, className)}>
@@ -76,8 +60,8 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-center w-[400px] h-[20px] relative">
-          <Progress value={40} />
+        <div className="flex items-center justify-center w-full h-[20px]">
+          <Progress value={progress * 100} />
         </div>
         <p className="font-light text-4xl">
           {`${drinks[selectedIndex].name}!`}
