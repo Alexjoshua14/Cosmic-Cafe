@@ -1,16 +1,32 @@
 import { useEffect, useRef, useState } from 'react'
 
+/**
+ * TESTS TO CREATE
+ * - Ensure timer is set to intervalDuration and index changes after provided time
+ * - Ensure that on mouseOver and on touchStart timer is paused
+ * - Ensure that on mouseLeave and on touchEnd timer is resumed correctly
+ * - Ensure that progress is correct during normal auto time
+ * - Ensure that progress is correct during pause
+ * - Ensure that progress is correct upon resume
+ */
+
+
+/**
+ * 
+ * @param intervalDuration 
+ * @param numOfItems 
+ * @returns 
+ */
 function useAutoIndexManager(intervalDuration: number, numOfItems: number):
-  ([number, () => void, () => void, () => void, () => void, () => void]) {
+  ({ selectedIndex: number, next: () => void, previous: () => void, pause: () => void, resume: () => void, startTime: number | null, getProgress: () => number }) {
   const [selectedIndex, changeIndex] = useState(0)
   const timerId = useRef<NodeJS.Timeout | null>(null)
   const timerStartTime = useRef<number | null>(null)
 
-  let pausedTime = 0
+  let timeElapsedAtPause = 0
 
   const next = () => {
     if (timerId.current) {
-      console.log(timerId.current)
       clearTimeout(timerId.current)
       timerId.current = null
     }
@@ -47,22 +63,30 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
       clearTimeout(timerId.current)
       timerId.current = null
     }
-    pausedTime = getProgress() * intervalDuration
-    console.log(pausedTime)
+    timeElapsedAtPause = getProgress() * intervalDuration
+    console.log(timeElapsedAtPause)
   }
 
   const resume = () => {
     if (!timerId.current) {
       timerId.current = setTimeout(() => {
         next()
-      }, intervalDuration - pausedTime)
+      }, intervalDuration - timeElapsedAtPause)
+      timerStartTime.current = Date.now() - timeElapsedAtPause
+      timeElapsedAtPause = 0
+
     }
   }
 
   const getProgress = () => {
     // now - start time -> [0, 1]
+    let msElapsed = 0
+    if (timeElapsedAtPause > 0) {
+      msElapsed = timeElapsedAtPause
+    } else {
+      msElapsed = timerStartTime.current ? Date.now() - timerStartTime.current : 0
+    }
 
-    let msElapsed = timerStartTime.current ? Date.now() - timerStartTime.current : 0
 
     return msElapsed / intervalDuration
   }
@@ -79,7 +103,7 @@ function useAutoIndexManager(intervalDuration: number, numOfItems: number):
     }
   })
 
-  return [selectedIndex, next, previous, pause, resume, getProgress]
+  return { selectedIndex, next, previous, pause, resume, startTime: timerStartTime.current, getProgress }
 }
 
 export default useAutoIndexManager

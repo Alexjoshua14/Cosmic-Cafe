@@ -2,11 +2,11 @@
 
 import { FC, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { MdOutlineCoffee } from 'react-icons/md'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { cn } from '@/lib/utils'
-import next from 'next'
 import useAutoIndexManager from '@/lib/hooks/useAutoIndexManager'
+import { motion, useAnimationFrame } from 'framer-motion'
+import { Progress } from '@radix-ui/react-progress'
 
 
 interface drinkShowcaseProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -38,7 +38,23 @@ const DRINK_DURATION = 5_000 // ms
 
 const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
   // Should perhaps use a reducer?
-  const [selectedDrink, next, previous, pause, resume] = useAutoIndexManager(DRINK_DURATION, drinks.length)
+  const { selectedIndex, next, previous, pause, resume, getProgress } = useAutoIndexManager(DRINK_DURATION, drinks.length)
+
+  const [progress, setProgress] = useState(.75)
+  const timerId = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    timerId.current = setInterval(() => {
+      let currentProgress = getProgress()
+      // setProgress(currentProgress)
+      console.log(currentProgress)
+    }, 1000)
+
+    return () => {
+      if (timerId.current)
+        clearTimeout(timerId.current)
+    }
+  })
 
   return (
     <div className={cn(`h-full flex items-center justify-between`, className)}>
@@ -53,15 +69,18 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
           {drinks.map((drink) => (
             <div key={drink.id}
               className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[240px] 
-                          ${drinks[selectedDrink].name == drink.name ? "grid" : "hidden"} 
+                          ${drinks[selectedIndex].name == drink.name ? "grid" : "hidden"} 
                           place-content-center`}
             >
               <Image src={drink.src} alt={drink.name} width={200} height={200} />
             </div>
           ))}
         </div>
+        <div className="flex items-center justify-center w-[400px] h-[20px] relative">
+          <Progress value={40} />
+        </div>
         <p className="font-light text-4xl">
-          {`${drinks[selectedDrink].name}!`}
+          {`${drinks[selectedIndex].name}!`}
         </p>
       </div>
       <button onClick={next}>
