@@ -12,7 +12,7 @@ export function useProgress(getProgress: () => number): {
     if (!progressIntervalId.current) {
       progressIntervalId.current = setInterval(() => {
         setProgress(() => getProgress())
-      }, 20)
+      }, 100)
     }
     
   }, [getProgress])

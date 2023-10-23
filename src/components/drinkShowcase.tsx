@@ -34,7 +34,7 @@ const drinks = [
   },
 ]
 
-const DRINK_DURATION = 10_000 // ms
+const DRINK_DURATION = 7_000 // ms
 
 const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
   // Should perhaps use a reducer?
@@ -92,8 +92,8 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-center w-1/5 h-[20px]">
-          <Progress value={+progress.toFixed(3) * 100} />
+        <div className="flex items-center justify-center w-[50px] h-[20px]">
+          <Progress value={+progress.toFixed(4) * 102} />
         </div>
         <p className="font-light text-4xl">
           {`${drinks[selectedIndex].name}!`}
