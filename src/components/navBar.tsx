@@ -9,7 +9,7 @@ interface navBarProps {
 
 const NavBar: FC<navBarProps> = ({ }) => {
   return (
-    <div className="z-40 sticky top-0 w-full flex flex-col shadow-lg backdrop-blur-xl">
+    <div className="z-40 sticky top-0 w-full flex flex-col shadow-lg backdrop-blur-xl text-center">
       <div className="flex items-center justify-between px-10 py-2">
         <button className="flex items-center gap-2 font-light">
           <IoMenuOutline size={24} />
