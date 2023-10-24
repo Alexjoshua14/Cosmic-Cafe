@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { IoArrowForwardOutline } from 'react-icons/io5'
 import { Separator } from './ui/separator'
+import Subscribe from './subscribe'
 
 interface footerProps {
 
@@ -27,12 +28,7 @@ const Footer: FC<footerProps> = ({ }) => {
             celestial flavors.
             `}
           </p>
-          <div className="w-full flex justify-between my-4 border-b-[1px] text-left border-black text-tertiary text-opacity-50 font-extralight">
-            <p>
-              enter your email address
-            </p>
-            <IoArrowForwardOutline size={22} />
-          </div>
+          <Subscribe />
         </div>
       </div>
       <div className="flex justify-around gap-8">
