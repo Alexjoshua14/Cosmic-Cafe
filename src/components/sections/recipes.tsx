@@ -37,7 +37,7 @@ const Recipes: FC<recipesProps> = ({ }) => {
       <h2 className="text-4xl font-serif pb-24">
         Recipes
       </h2>
-      <div className="relative w-full h-[500px] max-w-[1300px] overflow-y-clip">
+      <div className="relative w-full h-[550px] max-w-[1300px] overflow-y-clip pt-4">
         <div className="z-[0] absolute left-[15%] -bottom-52 -translate-x-1/2  h-[450px] w-[300px] -rotate-45 bg-stone-300">
         </div>
         <div className="z-[2] absolute left-[30%] -bottom-20 -translate-x-1/2 h-[450px] w-[300px] -rotate-12 bg-stone-200">

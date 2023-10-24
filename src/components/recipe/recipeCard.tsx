@@ -33,7 +33,7 @@ const RecipeIngredient: FC<recipeIngredientProps> = ({ ingredient }) => {
 
 const RecipeCard: FC<recipeCardProps> = ({ recipe, className }) => {
   return (
-    <div className={cn("p-4 flex flex-col gap-4", className)}>
+    <div className={cn("p-4 flex flex-col gap-4 border-b-[1px] border-dark rounded-md hover:ring-1 ring-stone-950 hover:-translate-y-4 transition-all", className)}>
       <div className="w-full flex flex-col items-center">
         <p className="text-xl">
           {recipe.title}
