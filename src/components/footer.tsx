@@ -8,7 +8,7 @@ interface footerProps {
 
 const Footer: FC<footerProps> = ({ }) => {
   return (
-    <div className="h-96 w-full flex flex-col md:flex-row items-center justify-between px-14 pt-4 pb-24 gap-8">
+    <div className="h-fit w-full flex flex-col md:flex-row items-center justify-between px-4 md:px-14 pt-4 pb-24 gap-8 bg-dark text-light">
       <div className="flex flex-col gap-2 max-w-[350px] text-center">
         <p className="text-2xl">
           {`Refer a friend, Get $7`}
