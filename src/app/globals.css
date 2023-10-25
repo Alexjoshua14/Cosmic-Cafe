@@ -7,9 +7,9 @@
 }
 
 .pop-light {
-  @apply hover:ring-1 ring-stone-50 border-b-[1px] border-transparent hover:border-light rounded-md;
+  @apply hover:ring-1 ring-stone-50 border-b-[1px] border-transparent hover:border-light rounded-md active:border-b-0;
 }
 
 .button {
-  @apply hover:-translate-y-1;
+  @apply hover:-translate-y-1 active:-translate-y-[.125rem];
 }
