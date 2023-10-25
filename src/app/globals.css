@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-.pop {
+.pop-dark {
+  @apply hover:ring-1 ring-stone-950 border-b-[1px] border-transparent hover:border-dark rounded-md;
+}
+
+.pop-light {
   @apply hover:ring-1 ring-stone-50 border-b-[1px] border-transparent hover:border-light rounded-md;
 }
 
-.pop-button {
-  @apply pop px-4 py-2 hover:-translate-y-1 transition-all;
+.button {
+  @apply hover:-translate-y-1;
 }

@@ -38,13 +38,13 @@ const NavBar: FC<navBarProps> = ({ }) => {
   return (
     <div className="z-40 sticky top-0 w-full flex flex-col shadow-lg backdrop-blur-xl text-center">
       <div className="flex items-center justify-between px-10 py-2">
-        <button className="flex items-center gap-2 font-light">
+        <button className="w-1/3 flex items-center gap-2 font-light">
           <IoMenuOutline size={24} />
           <p>
             Menu
           </p>
         </button>
-        <div className="flex flex-col items-center">
+        <div className="w-1/3 flex flex-col items-center justify-center">
           <h2 className="text-3xl font-serif">
             Cosmic Cafe
           </h2>
@@ -52,14 +52,14 @@ const NavBar: FC<navBarProps> = ({ }) => {
             Coffee & Wine Bar
           </h3>
         </div>
-        <div className="flex items-center gap-6">
-          <button role="search">
+        <div className="w-1/3 flex items-center justify-end gap-2">
+          <button role="search" className="pop-button-dark">
             <IoSearch size={24} />
           </button>
-          <Link href="/" /*LABEL THIS ELEMENT */>
+          <Link href="/" /*LABEL THIS ELEMENT */ className="pop-button-dark">
             <FaRegCircleUser size={22} />
           </Link>
-          <button /* LABEL THIS ELEMENT */>
+          <button /* LABEL THIS ELEMENT */ className="pop-button-dark">
             <IoCartOutline size={24} />
           </button>
         </div>
@@ -68,8 +68,8 @@ const NavBar: FC<navBarProps> = ({ }) => {
         <nav>
           <ul className="flex justify-around font-light text-sm">
             {navOptions.map((navOption) => (
-              <li key={`nav-${navOption.text}`} className="pop-button">
-                <Link href={navOption.link}>
+              <li key={`nav-${navOption.text}`} className="button transition-all">
+                <Link href={navOption.link} className="pop-light px-4 py-2 transition-colors">
                   {navOption.text}
                 </Link>
               </li>

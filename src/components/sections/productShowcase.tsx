@@ -36,7 +36,7 @@ const ProductShowcase: FC<productShowcaseProps> = ({ }) => {
       <div className="h-full max-w-[550px] md:max-w-none w-full flex flex-col gap-14 md:gap-8 md:flex-row items-center justify-center py-24 px-10">
         {showcaseContent.map((content, index) => (
           <>
-            <div key={`showcase-${content.title}`} className="h-[75vh] md:h-96 w-full  md:w-1/4 flex flex-col items-center justify-center py-4 gap-4 hover:ring-1 ring-stone-950 rounded-md border-b-dark hover:border-b-[1px] transition-all">
+            <div key={`showcase-${content.title}`} className="h-[75vh] md:h-96 w-full  md:w-1/4 flex flex-col items-center justify-center py-4 gap-4 pop-dark transition-colors">
               <h3 className="text-4xl">
                 {content.title}
               </h3>
