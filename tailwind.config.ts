@@ -34,6 +34,7 @@ module.exports = {
       colors: {
         'dark': '#27282C',
         'dark-1': '#494A4E',
+        'light': '#F0EBE7'
       },
       keyframes: {
         "accordion-down": {

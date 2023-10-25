@@ -7,6 +7,33 @@ interface navBarProps {
 
 }
 
+const navOptions = [
+  {
+    text: "Coffee",
+    link: "/"
+  },
+  {
+    text: "Wine",
+    link: "/"
+  },
+  {
+    text: "Subscriptions",
+    link: "/"
+  },
+  {
+    text: "Locations",
+    link: "/"
+  },
+  {
+    text: "Learn",
+    link: "/"
+  },
+  {
+    text: "Story",
+    link: "/"
+  },
+]
+
 const NavBar: FC<navBarProps> = ({ }) => {
   return (
     <div className="z-40 sticky top-0 w-full flex flex-col shadow-lg backdrop-blur-xl text-center">
@@ -40,36 +67,14 @@ const NavBar: FC<navBarProps> = ({ }) => {
       <div className="bg-dark text-light px-10 py-4">
         <nav>
           <ul className="flex justify-around font-light text-sm">
-            <li>
-              <Link href="/">
-                Coffee
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                Wine
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                Subscriptions
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                Locations
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                Learn
-              </Link>
-            </li>
-            <li>
-              <Link href="/">
-                Story
-              </Link>
-            </li>
+            {navOptions.map((navOption) => (
+              <li key={`nav-${navOption.text}`} className="pop-button">
+                <Link href={navOption.link}>
+                  {navOption.text}
+                </Link>
+              </li>
+            ))}
+
           </ul>
         </nav>
       </div>
