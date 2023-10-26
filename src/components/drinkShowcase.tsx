@@ -73,8 +73,8 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
   })
 
   return (
-    <div className={cn(`h-full flex items-center justify-between`, className)}>
-      <button onClick={previous}>
+    <div className={cn(`h-full flex items-center justify-between px-4`, className)}>
+      <button onClick={previous} className="pop-dark button">
         <IoIosArrowBack size={60} />
       </button>
 
@@ -99,7 +99,7 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
           {`${drinks[selectedIndex].name}!`}
         </p>
       </div>
-      <button onClick={next}>
+      <button onClick={next} className="pop-dark button">
         <IoIosArrowForward size={60} />
       </button>
     </div>

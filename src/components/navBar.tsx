@@ -38,12 +38,14 @@ const NavBar: FC<navBarProps> = ({ }) => {
   return (
     <div className="z-40 sticky top-0 w-full flex flex-col shadow-lg backdrop-blur-xl text-center">
       <div className="flex items-center justify-between px-10 py-2">
-        <button className="w-1/3 flex items-center gap-2 font-light">
-          <IoMenuOutline size={24} />
-          <p>
-            Menu
-          </p>
-        </button>
+        <div className="w-1/3 flex items-center">
+          <button className=" flex items-center gap-2 font-light pop-dark button px-2 py-1">
+            <IoMenuOutline size={24} />
+            <p>
+              Menu
+            </p>
+          </button>
+        </div>
         <div className="w-1/3 flex flex-col items-center justify-center">
           <h2 className="text-3xl font-serif">
             Cosmic Cafe
@@ -53,13 +55,13 @@ const NavBar: FC<navBarProps> = ({ }) => {
           </h3>
         </div>
         <div className="w-1/3 flex items-center justify-end gap-2">
-          <button role="search" className="pop-button-dark">
+          <button role="search" className="pop-dark button px-2 py-1">
             <IoSearch size={24} />
           </button>
-          <Link href="/" /*LABEL THIS ELEMENT */ className="pop-button-dark">
+          <Link href="/" /*LABEL THIS ELEMENT */ className="pop-dark button px-2 py-1">
             <FaRegCircleUser size={22} />
           </Link>
-          <button /* LABEL THIS ELEMENT */ className="pop-button-dark">
+          <button /* LABEL THIS ELEMENT */ className="pop-dark button px-2 py-1">
             <IoCartOutline size={24} />
           </button>
         </div>

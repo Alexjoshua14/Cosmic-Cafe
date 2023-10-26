@@ -51,11 +51,13 @@ const RecipeCard: FC<recipeCardProps> = ({ recipe, className }) => {
           <RecipeIngredient key={`${recipe.title}-${ingredient}`} ingredient={ingredient} />
         ))}
       </div>
-      <div className="self-end flex items-center gap-1">
-        <p>
-          Order one now
-        </p>
-        <IoArrowForwardOutline />
+      <div className="self-end">
+        <button className="button pop-dark flex items-center gap-1 px-2 py-1 transition-all" /* On click should add to cart and ask user if they want to view cart */>
+          <p>
+            Order one now
+          </p>
+          <IoArrowForwardOutline />
+        </button>
       </div>
     </div>
   )
