@@ -46,13 +46,15 @@ const NavBar: FC<navBarProps> = ({ }) => {
             </p>
           </button>
         </div>
-        <div className="w-1/3 flex flex-col items-center justify-center">
-          <h2 className="text-3xl font-serif">
-            Cosmic Cafe
-          </h2>
-          <h3 className="text-sm">
-            Coffee & Wine Bar
-          </h3>
+        <div className="w-1/3">
+          <Link href="/" className="flex flex-col items-center justify-center">
+            <h2 className="text-3xl font-serif">
+              Cosmic Cafe
+            </h2>
+            <h3 className="text-sm">
+              Coffee & Wine Bar
+            </h3>
+          </Link>
         </div>
         <div className="w-1/3 flex items-center justify-end gap-2">
           <button role="search" className="pop-dark button px-2 py-1">
