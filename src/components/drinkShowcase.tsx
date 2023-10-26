@@ -9,6 +9,7 @@ import { motion, useAnimationFrame } from 'framer-motion'
 import { Progress } from '@/components/ui/progress'
 
 
+
 interface drinkShowcaseProps extends React.HTMLAttributes<HTMLDivElement> {
 
 }
@@ -42,25 +43,25 @@ const DrinkShowcase: FC<drinkShowcaseProps> = ({ className }) => {
   const [isIntersecting, setIsIntersecting] = useState(true)
   const drinkCarouselRef = useRef<HTMLDivElement | null>(null)
 
-  const intersectionObserver = new IntersectionObserver((entries) => {
+  useEffect(() => {
+    const intersectionObserver = new IntersectionObserver((entries) => {
 
-    const isCurrentlyIntersecting = entries[0].isIntersecting
+      const isCurrentlyIntersecting = entries[0].isIntersecting
 
-    if (isIntersecting != isCurrentlyIntersecting) {
-      setIsIntersecting(isCurrentlyIntersecting)
-      if (isCurrentlyIntersecting) {
-        if (status == "paused") {
-          resume()
-        }
-      } else {
-        if (status == "playing") {
-          pause()
+      if (isIntersecting != isCurrentlyIntersecting) {
+        setIsIntersecting(isCurrentlyIntersecting)
+        if (isCurrentlyIntersecting) {
+          if (status == "paused") {
+            resume()
+          }
+        } else {
+          if (status == "playing") {
+            pause()
+          }
         }
       }
-    }
-  })
+    })
 
-  useEffect(() => {
     if (drinkCarouselRef.current)
       intersectionObserver.observe(drinkCarouselRef.current)
 
